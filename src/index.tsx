@@ -9,11 +9,7 @@ import { Canvas, Button, Form, FieldGroup, TextField } from "datocms-react-ui";
 import "datocms-react-ui/styles.css";
 import { useCallback, useMemo, useState } from "react";
 
-type PropTypes = {
-  ctx: RenderFieldExtensionCtx;
-};
-
-function ManualGeolocation({ ctx }: PropTypes) {
+function ManualGeolocation({ ctx }: { ctx: RenderFieldExtensionCtx }) {
   const [coordinates, setCoordinates] = useState("");
 
   const validCoords = useMemo(() => {
@@ -61,7 +57,7 @@ function ManualGeolocation({ ctx }: PropTypes) {
     <Canvas ctx={ctx}>
       <Form
         onSubmit={setLocation}
-        style={{ display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "flex-start" }}
       >
         <FieldGroup style={{ flex: "1 1 auto" }}>
           <TextField
@@ -73,7 +69,7 @@ function ManualGeolocation({ ctx }: PropTypes) {
             hint={`The latitude and longitude in decimal format, separated by a space or a comma. E.g. "12.34 114.5", "12.34, 114.5" or "12.34,114.5". A period (.) should be used as the decimal separator. The latitude and longitude must be in the -90..90 and -180..180 range, respectively.`}
           />
         </FieldGroup>
-        <FieldGroup style={{ flex: "0 0 auto", marginLeft: 16 }}>
+        <FieldGroup style={{ flex: "0 0 auto", marginLeft: 16, marginTop: 30 }}>
           <Button
             type="button"
             onClick={setLocation}
