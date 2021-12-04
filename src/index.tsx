@@ -65,12 +65,11 @@ function ManualGeolocation({ ctx }: PropTypes) {
       >
         <FieldGroup style={{ flex: "1 1 auto" }}>
           <TextField
-            required
             value={coordinates}
             onChange={setCoordinates}
-            id="coordinates"
-            name="coordinates"
-            label="Coordinates"
+            id="latLong"
+            name="latLong"
+            label="Manual latitude and longitude"
             hint={`The latitude and longitude in decimal format, separated by a space or a comma. E.g. "12.34 114.5", "12.34, 114.5" or "12.34,114.5". A period (.) should be used as the decimal separator. The latitude and longitude must be in the -90..90 and -180..180 range, respectively.`}
           />
         </FieldGroup>

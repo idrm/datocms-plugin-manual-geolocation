@@ -1,6 +1,6 @@
 {
   "name": "datocms-plugin-manual-geolocation",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "homepage": "https://github.com/idrm/datocms-plugin-manual-geolocation",
   "description": "Allows manually setting the coordinates (latitude and longitude) of geolocation fields",
@@ -51,5 +51,8 @@
     "coverImage": "docs/latlong.png",
     "entryPoint": "build/index.html",
     "permissions": []
-  }
+  },
+  "files": [
+    "build/*"
+  ]
 }
