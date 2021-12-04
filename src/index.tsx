@@ -5,7 +5,6 @@ import {
   RenderFieldExtensionCtx,
 } from "datocms-plugin-sdk";
 import { render } from "./utils/render";
-import ConfigScreen from "./entrypoints/ConfigScreen";
 import { Canvas, Button, Form, FieldGroup, TextField } from "datocms-react-ui";
 import "datocms-react-ui/styles.css";
 import { useCallback, useMemo, useState } from "react";
@@ -82,9 +81,6 @@ function ManualGeolocation({ ctx }: PropTypes) {
 }
 
 connect({
-  renderConfigScreen(ctx) {
-    return render(<ConfigScreen ctx={ctx} />);
-  },
   overrideFieldExtensions(field: Field, ctx: FieldIntentCtx) {
     if (field.attributes.field_type === "lat_lon") {
       return {
