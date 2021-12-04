@@ -14,10 +14,18 @@ type PropTypes = {
 };
 
 function ManualGeolocation({ ctx }: PropTypes) {
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
+  const [coordinates, setCoordinates] = useState("");
 
   const validCoords = useMemo(() => {
+    const parts = coordinates
+      .split(coordinates.indexOf(",") !== -1 ? "," : " ")
+      .map((t) => t.trim())
+      .filter((t) => t.trim().length > 0);
+    if (parts.length !== 2) {
+      return false;
+    }
+    const [lat, lng] = parts;
+
     if (lat.trim() === "" || lng.trim() === "") {
       return false;
     }
@@ -25,18 +33,29 @@ function ManualGeolocation({ ctx }: PropTypes) {
       const latVal = parseFloat(lat.trim());
       const lngVal = parseFloat(lng.trim());
 
-      return Number.isFinite(latVal) && Number.isFinite(lngVal);
+      return (
+        Number.isFinite(latVal) &&
+        Number.isFinite(lngVal) &&
+        latVal >= -90 &&
+        latVal <= 90 &&
+        lngVal >= -180 &&
+        lngVal <= 180
+      );
     } catch (error) {
       return false;
     }
-  }, [lat, lng]);
+  }, [coordinates]);
 
   const setLocation = useCallback(() => {
+    const [lat, lng] = coordinates
+      .split(coordinates.indexOf(",") !== -1 ? "," : " ")
+      .map((t) => t.trim())
+      .filter((t) => t.trim().length > 0);
     ctx.setFieldValue(ctx.fieldPath, {
       latitude: parseFloat(lat),
       longitude: parseFloat(lng),
     });
-  }, [lat, lng, ctx]);
+  }, [coordinates, ctx]);
 
   return (
     <Canvas ctx={ctx}>
@@ -44,32 +63,23 @@ function ManualGeolocation({ ctx }: PropTypes) {
         onSubmit={setLocation}
         style={{ display: "flex", alignItems: "center" }}
       >
-        <FieldGroup style={{ flex: "0 0 200px" }}>
+        <FieldGroup style={{ flex: "1 1 auto" }}>
           <TextField
             required
-            value={lat}
-            onChange={setLat}
-            id="lat"
-            name="latitude"
-            label="Latitude"
+            value={coordinates}
+            onChange={setCoordinates}
+            id="coordinates"
+            name="coordinates"
+            label="Coordinates"
+            hint={`The latitude and longitude in decimal format, separated by a space or a comma. E.g. "12.34 114.5", "12.34, 114.5" or "12.34,114.5". A period (.) should be used as the decimal separator. The latitude and longitude must be in the -90..90 and -180..180 range, respectively.`}
           />
         </FieldGroup>
-        <FieldGroup style={{ flex: "0 0 200px", marginLeft: 16 }}>
-          <TextField
-            required
-            value={lng}
-            onChange={setLng}
-            id="lng"
-            name="longitude"
-            label="Longitude"
-          />
-        </FieldGroup>
-        <FieldGroup style={{ flex: "0 0 200px", marginLeft: 16 }}>
+        <FieldGroup style={{ flex: "0 0 auto", marginLeft: 16 }}>
           <Button
             type="button"
             onClick={setLocation}
             buttonSize="xxs"
-            buttonType="muted"
+            buttonType={validCoords ? "muted" : "primary"}
             disabled={!validCoords}
           >
             Set coordinates
