@@ -1,3 +1,3 @@
-# [Your plugin name]
+# Manual Geolocation
 
-[Describe what your plugin does, and how users you can configure it! Screenshots are always welcome!]
+Allows manually entering the coordinates (latitude and longitude) of a geolocation field.
