@@ -74,7 +74,7 @@ function ManualGeolocation({ ctx }: { ctx: RenderFieldExtensionCtx }) {
             type="button"
             onClick={setLocation}
             buttonSize="xxs"
-            buttonType={validCoords ? "muted" : "primary"}
+            buttonType="muted"
             disabled={!validCoords}
           >
             Set coordinates
